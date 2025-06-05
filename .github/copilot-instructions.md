@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-This project is intended for making connecting, logging including printing to screen and saving to file, and interacting with BLE devices that supports Nordic UART Service (NUS) easier than ever.
+This project is intended for making connecting, logging including printing to screen and saving to file, and interacting with BLE devices that support Nordic UART Service (NUS) easier than ever.
 
 ## General Coding Guidelines
 
