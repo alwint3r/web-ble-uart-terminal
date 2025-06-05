@@ -74,7 +74,7 @@ export class BLEDevice {
   }
 
   isConnected() {
-    return this.device && this.device.gatt.connected;
+    return !!(this.device && this.device.gatt && this.device.gatt.connected);
   }
 
   getDeviceName() {

@@ -15,7 +15,15 @@ export class Terminal {
 
     const line = document.createElement('div');
     line.className = `terminal-line ${type}`;
-    line.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
+
+    const timestampSpan = document.createElement('span');
+    timestampSpan.className = 'timestamp';
+    timestampSpan.textContent = `[${timestamp}]`;
+
+    const messageText = document.createTextNode(` ${message}`);
+
+    line.appendChild(timestampSpan);
+    line.appendChild(messageText);
     this.terminal.appendChild(line);
     this.terminal.scrollTop = this.terminal.scrollHeight;
   }
