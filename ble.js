@@ -5,6 +5,8 @@ export class BLEDevice {
     this.service = null;
     this.rxCharacteristic = null;
     this.txCharacteristic = null;
+    this.disconnectCallbacks = [];
+    this._boundHandleDisconnection = this._handleDisconnection.bind(this);
     this.NUS_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
     this.RX_CHARACTERISTIC_UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
     this.TX_CHARACTERISTIC_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
@@ -34,6 +36,9 @@ export class BLEDevice {
       // Start notifications
       await this.txCharacteristic.startNotifications();
 
+      // Listen for unexpected disconnections
+      this.device.addEventListener('gattserverdisconnected', this._boundHandleDisconnection);
+
       return true;
     } catch (error) {
       console.error('BLE Connection Error:', error);
@@ -54,11 +59,7 @@ export class BLEDevice {
       console.error('BLE Disconnect Error:', error);
       throw error;
     } finally {
-      this.device = null;
-      this.server = null;
-      this.service = null;
-      this.rxCharacteristic = null;
-      this.txCharacteristic = null;
+      this._handleDisconnection();
     }
   }
 
@@ -81,6 +82,30 @@ export class BLEDevice {
       const value = decoder.decode(event.target.value);
       callback(value);
     });
+  }
+
+  onDisconnected(callback) {
+    this.disconnectCallbacks.push(callback);
+  }
+
+  _handleDisconnection() {
+    if (this.device) {
+      this.device.removeEventListener('gattserverdisconnected', this._boundHandleDisconnection);
+    }
+    this.device = null;
+    this.server = null;
+    this.service = null;
+    this.rxCharacteristic = null;
+    this.txCharacteristic = null;
+
+    this.disconnectCallbacks.forEach((cb) => {
+      try {
+        cb();
+      } catch (err) {
+        console.error('Disconnect callback error:', err);
+      }
+    });
+    this.disconnectCallbacks = [];
   }
 
   // Checks if the device is connected by verifying the presence of `this.device`,

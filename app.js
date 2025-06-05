@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const bleDevice = new BLEDevice();
   const terminal = new Terminal(document.getElementById('terminal'));
 
+  bleDevice.onDisconnected(() => {
+    onDisconnected();
+    terminal.print('Disconnected from device', 'info');
+  });
+
   // Get UI elements
   const connectBtn = document.getElementById('connectBtn');
   const disconnectBtn = document.getElementById('disconnectBtn');
@@ -36,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
   disconnectBtn.addEventListener('click', async () => {
     try {
       await bleDevice.disconnect();
-      onDisconnected();
-      terminal.print('Disconnected from device', 'info');
     } catch (error) {
       terminal.print('Disconnect failed: ' + error.message, 'error');
     }
