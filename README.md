@@ -18,6 +18,7 @@ A web-based terminal for interacting with BLE devices that support Nordic UART S
 ## Usage
 
 1. Start a local server:
+
    ```bash
    bunx serve
    ```
