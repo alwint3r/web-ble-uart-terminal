@@ -12,7 +12,7 @@ export class BLEDevice {
 
   async connect() {
     try {
-      // Request device with NUS service
+      // Request device that provides the Nordic UART Service (NUS)
       this.device = await navigator.bluetooth.requestDevice({
         filters: [
           {
