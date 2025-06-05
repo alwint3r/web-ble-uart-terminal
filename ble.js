@@ -105,6 +105,7 @@ export class BLEDevice {
         console.error('Disconnect callback error:', err);
       }
     });
+    this.disconnectCallbacks = [];
   }
 
   // Checks if the device is connected by verifying the presence of `this.device`,
