@@ -42,14 +42,24 @@ export class BLEDevice {
   }
 
   async disconnect() {
-    if (this.device && this.device.gatt.connected) {
-      await this.device.gatt.disconnect();
+    try {
+      if (this.txCharacteristic) {
+        await this.txCharacteristic.stopNotifications();
+      }
+
+      if (this.device && this.device.gatt.connected) {
+        await this.device.gatt.disconnect();
+      }
+    } catch (error) {
+      console.error('BLE Disconnect Error:', error);
+      throw error;
+    } finally {
+      this.device = null;
+      this.server = null;
+      this.service = null;
+      this.rxCharacteristic = null;
+      this.txCharacteristic = null;
     }
-    this.device = null;
-    this.server = null;
-    this.service = null;
-    this.rxCharacteristic = null;
-    this.txCharacteristic = null;
   }
 
   async send(data) {
