@@ -35,7 +35,15 @@ export class Terminal {
 
   async saveLogs() {
     const logText = this.logs
-      .map((log) => `[${log.timestamp}] ${log.type.toUpperCase()}: ${log.message}`)
+      .map((log) => {
+        const typeLabel = log.type.toUpperCase();
+        const prefix = `${log.type.charAt(0).toUpperCase() + log.type.slice(1)}: `;
+        let message = log.message;
+        if (message.startsWith(prefix)) {
+          message = message.slice(prefix.length);
+        }
+        return `[${log.timestamp}] ${typeLabel}: ${message}`;
+      })
       .join('\n');
 
     const blob = new Blob([logText], { type: 'text/plain' });
