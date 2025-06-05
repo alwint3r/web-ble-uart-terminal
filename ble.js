@@ -73,8 +73,11 @@ export class BLEDevice {
     });
   }
 
+  // Checks if the device is connected by verifying the presence of `this.device`,
+  // `this.device.gatt`, and `this.device.gatt.connected`. The `!!` operator ensures
+  // a boolean return value.
   isConnected() {
-    return this.device && this.device.gatt.connected;
+    return !!(this.device && this.device.gatt && this.device.gatt.connected);
   }
 
   getDeviceName() {
