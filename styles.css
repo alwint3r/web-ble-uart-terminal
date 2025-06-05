@@ -5,6 +5,12 @@
   --text-color: #333333;
   --terminal-bg: #1e1e1e;
   --terminal-text: #ffffff;
+  --sent-color: #4caf50;
+  --received-color: #2196f3;
+  --error-color: #f44336;
+  --info-color: #ffc107;
+  --success-color: #4caf50;
+  --timestamp-color: #757575;
 }
 
 * {
@@ -62,6 +68,42 @@ header {
   overflow-y: auto;
   font-family: "Courier New", Courier, monospace;
   margin-bottom: 1rem;
+}
+
+.terminal .timestamp {
+  color: var(--timestamp-color);
+  margin-right: 0.5rem;
+}
+
+.terminal-line {
+  margin-bottom: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+.terminal-line:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.terminal-line.sent {
+  color: var(--sent-color);
+}
+
+.terminal-line.received {
+  color: var(--received-color);
+}
+
+.terminal-line.error {
+  color: var(--error-color);
+}
+
+.terminal-line.info {
+  color: var(--info-color);
+}
+
+.terminal-line.success {
+  color: var(--success-color);
 }
 
 .input-area {
