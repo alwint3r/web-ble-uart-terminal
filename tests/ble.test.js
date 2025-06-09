@@ -1,5 +1,5 @@
 import { test, expect } from 'bun:test';
-import { BLEDevice } from '../ble.js';
+import { BLEDevice } from '../public/ble.js';
 
 // Mock Bluetooth device for tests
 class MockDevice {
