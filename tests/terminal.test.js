@@ -1,6 +1,6 @@
 import { test, expect } from 'bun:test';
 import { JSDOM } from 'jsdom';
-import { Terminal } from '../terminal.js';
+import { Terminal } from '../public/terminal.js';
 
 test('Terminal clear removes logs and DOM nodes', () => {
   const dom = new JSDOM("<!DOCTYPE html><div id='terminal'></div>");
